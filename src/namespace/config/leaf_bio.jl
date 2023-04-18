@@ -10,7 +10,6 @@ $(TYPEDFIELDS)
 
 """
 Base.@kwdef struct HyperspectralAbsorption{FT,DIM_WL}
-    # Constant features
     "Specific absorption coefficients of anthocynanin `[-]`"
     K_ANT::SVector{DIM_WL,FT}
     "Specific absorption coefficients of senescent material (brown pigments) `[-]`"

@@ -14,6 +14,8 @@ const LAND_2021 = artifact"land_model_spectrum_V3" * "/clima_land_spectra_2021.n
 
 include("config/constant.jl")
 include("config/leaf_bio.jl")
+include("config/radiation.jl")
+include("config/soil.jl")
 
 include("state/spac.jl")
 
