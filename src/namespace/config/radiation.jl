@@ -11,9 +11,9 @@ $(TYPEDFIELDS)
 """
 Base.@kwdef struct HyperspectralRadiation{FT,DIM_WL}
     "Diffuse radiation `[mW m⁻² nm⁻¹]`"
-    e_diffuse::SVector{DIM_WL,FT}
+    E_DIF::SVector{DIM_WL,FT}
     "Direct radiation `[mW m⁻² nm⁻¹]`"
-    e_direct::SVector{DIM_WL,FT}
+    E_DIR::SVector{DIM_WL,FT}
 end
 
 HyperspectralRadiation{FT}(dset::String) where {FT} = (

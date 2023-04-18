@@ -6,7 +6,8 @@ using Emerald.EmeraldLand.NameSpace
                     NameSpace.HyperspectralAbsorption{FT}(NameSpace.LAND_2017),
                     NameSpace.HyperspectralAbsorption{FT}(NameSpace.LAND_2021),
                     NameSpace.HyperspectralRadiation{FT}(NameSpace.LAND_2021),
-                    NameSpace.GSVSoilAlbedo{FT}(NameSpace.LAND_2021),]
+                    NameSpace.GSVSoilAlbedo{FT}(NameSpace.LAND_2021),
+                    NameSpace.WaveLengthSet{FT}(NameSpace.LAND_2021)]
             @test isbits(var);
         end;
     end;

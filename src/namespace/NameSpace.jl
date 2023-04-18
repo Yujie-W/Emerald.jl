@@ -16,6 +16,7 @@ include("config/constant.jl")
 include("config/leaf_bio.jl")
 include("config/radiation.jl")
 include("config/soil.jl")
+include("config/wavelength.jl")
 
 include("state/spac.jl")
 
