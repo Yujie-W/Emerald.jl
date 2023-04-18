@@ -20,6 +20,7 @@ Return the dimensions of the sturct
 function dims end
 
 
+include("config/canopy.jl")
 include("config/constant.jl")
 include("config/leaf_bio.jl")
 include("config/radiation.jl")

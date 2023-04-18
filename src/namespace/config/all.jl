@@ -9,7 +9,9 @@ Structure for all configurations
 $(TYPEDFIELDS)
 
 """
-Base.@kwdef struct EmeraldConfiguration{FT,DIM_AXES,DIM_NIR,DIM_PAR,DIM_SIF,DIM_SIFE,DIM_WL}
+Base.@kwdef struct EmeraldConfiguration{FT,DIM_AXES,DIM_AZI,DIM_INCL,DIM_NIR,DIM_PAR,DIM_SIF,DIM_SIFE,DIM_WL}
+    "Canopy structure"
+    CAN::CanopyStructure{FT,DIM_AZI,DIM_INCL}
     "Universal constants"
     CONST::UniversalConstants{FT}
     "GSV soil albedo model matrix"
@@ -17,26 +19,33 @@ Base.@kwdef struct EmeraldConfiguration{FT,DIM_AXES,DIM_NIR,DIM_PAR,DIM_SIF,DIM_
     "Leaf hyperspectral absorption coefficients"
     LHA::HyperspectralAbsorption{FT,DIM_WL}
     "Reference hyperspectral radiation profiles"
-    RAD_REF::HyperspectralRadiation{FT,DIM_WL}
+    RAD::HyperspectralRadiation{FT,DIM_WL}
     "Wavelength sets"
     WLSET::WaveLengthSet{FT,DIM_NIR,DIM_PAR,DIM_SIF,DIM_SIFE,DIM_WL}
 end
 
-EmeraldConfiguration{FT}(dset::String; gsv_axes::Int = 4, wl_nir = (700, 2500), wl_par = (400, 750), wl_sif = (640, 850), wl_sife = (400, 750)) where {FT} = (
+EmeraldConfiguration{FT}(dset::String; gsv_axes::Int = 4, n_azi::Int = 36, n_incl::Int = 9, wl_nir = (700, 2500), wl_par = (400, 750), wl_sif = (640, 850), wl_sife = (400, 750)) where {FT} = (
     _cst = UniversalConstants{FT}();
+    _can = CanopyStructure{FT}(n_azi = n_azi, n_incl = n_incl);
     _gsv = GSVSoilAlbedo{FT}(dset, gsv_axes);
     _lha = HyperspectralAbsorption{FT}(dset);
     _rad = HyperspectralRadiation{FT}(dset);
     _wls = WaveLengthSet{FT}(dset; wl_nir = wl_nir, wl_par = wl_par, wl_sif = wl_sif, wl_sife = wl_sife);
 
     (DIM_AXES,DIM_WL) = dims(_gsv);
+    (DIM_AZI,DIM_INCL) = dims(_can);
     (DIM_NIR,DIM_PAR,DIM_SIF,DIM_SIFE,DIM_WL) = dims(_wls);
 
-    return EmeraldConfiguration{FT,DIM_AXES,DIM_NIR,DIM_PAR,DIM_SIF,DIM_SIFE,DIM_WL}(
-                CONST   = _cst,
-                GSV     = _gsv,
-                LHA     = _lha,
-                RAD_REF = _rad,
-                WLSET   = _wls,
+    return EmeraldConfiguration{FT,DIM_AXES,DIM_AZI,DIM_INCL,DIM_NIR,DIM_PAR,DIM_SIF,DIM_SIFE,DIM_WL}(
+                CAN   = _can,
+                CONST = _cst,
+                GSV   = _gsv,
+                LHA   = _lha,
+                RAD   = _rad,
+                WLSET = _wls,
     )
+);
+
+dims(::EmeraldConfiguration{FT,DIM_AXES,DIM_AZI,DIM_INCL,DIM_NIR,DIM_PAR,DIM_SIF,DIM_SIFE,DIM_WL}) where {FT,DIM_AXES,DIM_AZI,DIM_INCL,DIM_NIR,DIM_PAR,DIM_SIF,DIM_SIFE,DIM_WL} = (
+    return DIM_AXES,DIM_AZI,DIM_INCL,DIM_NIR,DIM_PAR,DIM_SIF,DIM_SIFE,DIM_WL
 );
