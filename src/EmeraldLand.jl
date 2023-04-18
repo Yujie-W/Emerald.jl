@@ -1,5 +1,7 @@
 module EmeraldLand
 
+using ..EmeraldIO
+
 export CanopyOptics
 export NameSpace
 

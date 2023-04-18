@@ -1,7 +1,11 @@
 module EmeraldIO
 
+export Netcdf
+export Text
 
-include("io/TextIO.jl")
+
+include("io/Netcdf.jl")
+include("io/Text.jl")
 
 
 end # module
