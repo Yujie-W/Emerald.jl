@@ -48,6 +48,8 @@ HyperspectralAbsorption{FT}(dset::String) where {FT} = (
                 K_LMA   = read_nc(dset, "K_LMA") .* 10,
                 K_PRO   = read_nc(dset, "K_PRO") .* 10,
                 K_PS    = read_nc(dset, "K_PS"),
-                NR      = read_nc(dset, "NR")
+                NR      = read_nc(dset, "NR"),
     )
 );
+
+dims(::HyperspectralAbsorption{FT,DIM_WL}) where {FT,DIM_WL} = (DIM_WL,);

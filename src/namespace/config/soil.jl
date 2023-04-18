@@ -21,3 +21,5 @@ GSVSoilAlbedo{FT}(dset::String, n::Int = 4) where {FT} = (
 
     return GSVSoilAlbedo{FT,n,_dim_λ}(NTuple{n,SVector{_dim_λ,FT}}(_svecs))
 );
+
+dims(::GSVSoilAlbedo{FT,DIM_AXES,DIM_WL}) where {FT,DIM_AXES,DIM_WL} = (DIM_AXES,DIM_WL,);

@@ -61,3 +61,5 @@ WaveLengthSet{FT}(dset::String; wl_nir = (700, 2500), wl_par = (400, 750), wl_si
                 IΛ_SIFE = findall(wl_sife[1] .<= _λ .<= wl_sife[2]),
     )
 );
+
+dims(::WaveLengthSet{FT,DIM_NIR,DIM_PAR,DIM_SIF,DIM_SIFE,DIM_WL}) where {FT,DIM_NIR,DIM_PAR,DIM_SIF,DIM_SIFE,DIM_WL} = (DIM_NIR,DIM_PAR,DIM_SIF,DIM_SIFE,DIM_WL,);

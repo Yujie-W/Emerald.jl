@@ -12,11 +12,21 @@ const LAND_2017 = artifact"land_model_spectrum_V3" * "/clima_land_spectra_2017.n
 const LAND_2021 = artifact"land_model_spectrum_V3" * "/clima_land_spectra_2021.nc";
 
 
+"""
+
+Return the dimensions of the sturct
+
+"""
+function dims end
+
+
 include("config/constant.jl")
 include("config/leaf_bio.jl")
 include("config/radiation.jl")
 include("config/soil.jl")
 include("config/wavelength.jl")
+
+include("config/all.jl")
 
 include("state/spac.jl")
 
