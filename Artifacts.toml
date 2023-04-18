@@ -1,0 +1,7 @@
+[land_model_spectrum_V3]
+git-tree-sha1 = "dbe65e9a8b34c1a0275dfd59e49212f8c634c11c"
+lazy = true
+
+    [[land_model_spectrum_V3.download]]
+    sha256 = "44b04f7ed12f6bf26079cf5357906ea0a209c32858d0e155e195b9843e7a3ed5"
+    url = "https://github.com/Yujie-W/ResearchArtifacts/raw/wyujie/LandModel/land_model_spectrum_V3.tar.gz"
