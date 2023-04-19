@@ -18,4 +18,6 @@ Base.@kwdef struct MultipleLayerSPACState{FT,DIM_CANOPY}
     mesophyll::NTuple{DIM_CANOPY,FT} = NTuple{DIM_CANOPY,FT}(ones(FT,DIM_CANOPY) .* FT(1.4))
     "Protein content in lma (pro = lma - cbc) `[kg m⁻²]`"
     pro::NTuple{DIM_CANOPY,FT} = NTuple{DIM_CANOPY,FT}(zeros(FT,DIM_CANOPY))
+    "Leaf water content `[kg m⁻²]`"
+    water::NTuple{DIM_CANOPY,FT} = NTuple{DIM_CANOPY,FT}(ones(FT,DIM_CANOPY) .* FT(0.5))
 end

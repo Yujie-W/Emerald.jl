@@ -10,6 +10,15 @@ $(TYPEDFIELDS)
 
 """
 Base.@kwdef struct EmeraldConfiguration{FT,DIM_AXES,DIM_AZI,DIM_INCL,DIM_NIR,DIM_PAR,DIM_SIF,DIM_SIFE,DIM_WL}
+    # On/off features
+    "Whether APAR absorbed by carotenoid is counted as PPAR"
+    APAR_CAR::Bool = true
+    "Whether to use steady state plant hydraulic system"
+    STEADY_STATE_HS::Bool = true
+    "Whether to convert energy to photons when computing fluorescence"
+    Φ_PHOTON::Bool = true
+
+    # Embedded structures
     "Canopy structure"
     CAN::CanopyStructure{FT,DIM_AZI,DIM_INCL}
     "Universal constants"
