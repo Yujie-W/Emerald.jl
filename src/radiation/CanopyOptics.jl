@@ -1,3 +1,0 @@
-module CanopyOptics
-
-end # module

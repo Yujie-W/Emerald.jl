@@ -34,7 +34,7 @@ Base.@kwdef struct HyperspectralAbsorption{FT,DIM_WL}
     NR::SVector{DIM_WL,FT}
 end
 
-HyperspectralAbsorption{FT}(dset::String) where {FT} = (
+HyperspectralAbsorption{FT}(dset::String = LAND_2021) where {FT} = (
     _dim_λ = size_nc(dset, "K_ANT")[2][1];
 
     return HyperspectralAbsorption{FT,_dim_λ}(

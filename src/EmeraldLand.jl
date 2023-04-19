@@ -2,16 +2,13 @@ module EmeraldLand
 
 using ..EmeraldIO
 
-export CanopyOptics
-export LeafOptics
+export CanopyRT
 export NameSpace
 
 
 include("namespace/NameSpace.jl")
 
-include("radiation/LeafOptics.jl")
-
-include("radiation/CanopyOptics.jl")
+include("radiation/CanopyRT.jl")
 
 
 end # module

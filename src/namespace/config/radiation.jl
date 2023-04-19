@@ -16,7 +16,7 @@ Base.@kwdef struct HyperspectralRadiation{FT,DIM_WL}
     E_DIR::SVector{DIM_WL,FT}
 end
 
-HyperspectralRadiation{FT}(dset::String) where {FT} = (
+HyperspectralRadiation{FT}(dset::String = LAND_2021) where {FT} = (
     _dim_λ = size_nc(dset, "E_DIFF")[2][1];
 
     HyperspectralRadiation{FT,_dim_λ}(read_nc(dset, "E_DIFF"), read_nc(dset, "E_DIR"))

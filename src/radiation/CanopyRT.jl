@@ -1,4 +1,4 @@
-module LeafOptics
+module CanopyRT
 
 using SpecialFunctions: expint
 

@@ -1,3 +1,14 @@
+"""
+
+$(TYPEDEF)
+
+Structure for all state variables in a multiple layer SPAC
+
+# Fields
+
+$(TYPEDFIELDS)
+
+"""
 Base.@kwdef struct MultipleLayerSPACState{FT,DIM_CANOPY}
     # Leaf biophysics used for canopy radiative transfer
     "Anthocyanin content `[kg m⁻²]`"
@@ -19,5 +30,5 @@ Base.@kwdef struct MultipleLayerSPACState{FT,DIM_CANOPY}
     "Protein content in lma (pro = lma - cbc) `[kg m⁻²]`"
     pro::NTuple{DIM_CANOPY,FT} = NTuple{DIM_CANOPY,FT}(zeros(FT,DIM_CANOPY))
     "Leaf water content `[kg m⁻²]`"
-    water::NTuple{DIM_CANOPY,FT} = NTuple{DIM_CANOPY,FT}(ones(FT,DIM_CANOPY) .* FT(0.5))
+    water::NTuple{DIM_CANOPY,FT} = NTuple{DIM_CANOPY,FT}(ones(FT,DIM_CANOPY) .* FT(0.06))
 end

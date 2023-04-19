@@ -49,6 +49,17 @@ function average_transmittance(α::FT, nr::FT) where {FT}
 end
 
 
+"""
+
+    leaf_optical_properties(config::EmeraldConfiguration{FT}, state::MultipleLayerSPACState{FT}, i::Int, j::Int) where {FT}
+
+Return leaf shortwave reflectance and transmittance at a given wavelength, given
+- `config` `EmeraldConfiguration` struct
+- `state` All state variables in a multiple layer SPAC
+- `i` ith canopy layer
+- `j` jth wavelength as in config
+
+"""
 function leaf_optical_properties end
 
 leaf_optical_properties(config::EmeraldConfiguration{FT}, state::MultipleLayerSPACState{FT}, i::Int, j::Int) where {FT} = (

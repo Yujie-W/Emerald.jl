@@ -43,7 +43,7 @@ Base.@kwdef struct WaveLengthSet{FT,DIM_NIR,DIM_PAR,DIM_SIF,DIM_SIFE,DIM_WL}
     Λ_SIFE::SVector{DIM_SIFE,FT} = Λ[IΛ_SIFE]
 end
 
-WaveLengthSet{FT}(dset::String; wl_nir = (700, 2500), wl_par = (400, 750), wl_sif = (640, 850), wl_sife = (400, 750)) where {FT} =  (
+WaveLengthSet{FT}(dset::String = LAND_2021; wl_nir = (700, 2500), wl_par = (400, 750), wl_sif = (640, 850), wl_sife = (400, 750)) where {FT} =  (
     _λ = read_nc(dset, "WL");
     _dim_nir  = length(findall(wl_nir[1]  .<= _λ .<= wl_nir[2]));
     _dim_par  = length(findall(wl_par[1]  .<= _λ .<= wl_par[2]));
