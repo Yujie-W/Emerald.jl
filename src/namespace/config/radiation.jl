@@ -22,4 +22,4 @@ HyperspectralRadiation{FT}(dset::String = LAND_2021) where {FT} = (
     HyperspectralRadiation{FT,_dim_λ}(read_nc(dset, "E_DIFF"), read_nc(dset, "E_DIR"))
 );
 
-dims(::HyperspectralRadiation{FT,DIM_WL}) where {FT,DIM_WL} = (DIM_WL,);
+dim(::HyperspectralRadiation{FT,DIM_WL}) where {FT,DIM_WL} = DIM_WL;

@@ -32,3 +32,5 @@ Base.@kwdef struct MultipleLayerSPACState{FT,DIM_CANOPY}
     "Leaf water content `[kg m⁻²]`"
     water::NTuple{DIM_CANOPY,FT} = NTuple{DIM_CANOPY,FT}(ones(FT,DIM_CANOPY) .* FT(0.06))
 end
+
+dim_canopy(::MultipleLayerSPACState{FT,DIM_CANOPY}) where {FT,DIM_CANOPY} = DIM_CANOPY;

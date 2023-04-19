@@ -79,8 +79,11 @@ EmeraldConfiguration{FT}(
     _rad = HyperspectralRadiation{FT}(dset);
     _wls = WaveLengthSet{FT}(dset; wl_nir = wl_nir, wl_par = wl_par, wl_sif = wl_sif, wl_sife = wl_sife);
 
-    (_,DIM_WL) = dims(_gsv);
-    (DIM_NIR,DIM_PAR,DIM_SIF,DIM_SIFE,_) = dims(_wls);
+    DIM_NIR = dim_nir(_wls);
+    DIM_PAR = dim_par(_wls);
+    DIM_SIF = dim_sif(_wls);
+    DIM_SIFE = dim_sife(_wls);
+    DIM_WL = dim_wl(_wls);
 
     return EmeraldConfiguration{FT,DIM_AZI,DIM_GSV,DIM_INCL,DIM_NIR,DIM_PAR,DIM_SIF,DIM_SIFE,DIM_WL,DIM_GSV*DIM_WL}(
                 CAN   = _can,
@@ -92,6 +95,11 @@ EmeraldConfiguration{FT}(
     )
 );
 
-dims(::EmeraldConfiguration{FT,DIM_AZI,DIM_GSV,DIM_INCL,DIM_NIR,DIM_PAR,DIM_SIF,DIM_SIFE,DIM_WL}) where {FT,DIM_AZI,DIM_GSV,DIM_INCL,DIM_NIR,DIM_PAR,DIM_SIF,DIM_SIFE,DIM_WL} = (
-    return DIM_AZI,DIM_GSV,DIM_INCL,DIM_NIR,DIM_PAR,DIM_SIF,DIM_SIFE,DIM_WL
-);
+dim_azi(::EmeraldConfiguration{FT,DIM_AZI,DIM_GSV,DIM_INCL,DIM_NIR,DIM_PAR,DIM_SIF,DIM_SIFE,DIM_WL}) where {FT,DIM_AZI,DIM_GSV,DIM_INCL,DIM_NIR,DIM_PAR,DIM_SIF,DIM_SIFE,DIM_WL} = DIM_AZI;
+dim_gsv(::EmeraldConfiguration{FT,DIM_AZI,DIM_GSV,DIM_INCL,DIM_NIR,DIM_PAR,DIM_SIF,DIM_SIFE,DIM_WL}) where {FT,DIM_AZI,DIM_GSV,DIM_INCL,DIM_NIR,DIM_PAR,DIM_SIF,DIM_SIFE,DIM_WL} = DIM_GSV;
+dim_incl(::EmeraldConfiguration{FT,DIM_AZI,DIM_GSV,DIM_INCL,DIM_NIR,DIM_PAR,DIM_SIF,DIM_SIFE,DIM_WL}) where {FT,DIM_AZI,DIM_GSV,DIM_INCL,DIM_NIR,DIM_PAR,DIM_SIF,DIM_SIFE,DIM_WL} = DIM_INCL;
+dim_nir(::EmeraldConfiguration{FT,DIM_AZI,DIM_GSV,DIM_INCL,DIM_NIR,DIM_PAR,DIM_SIF,DIM_SIFE,DIM_WL}) where {FT,DIM_AZI,DIM_GSV,DIM_INCL,DIM_NIR,DIM_PAR,DIM_SIF,DIM_SIFE,DIM_WL} = DIM_NIR;
+dim_par(::EmeraldConfiguration{FT,DIM_AZI,DIM_GSV,DIM_INCL,DIM_NIR,DIM_PAR,DIM_SIF,DIM_SIFE,DIM_WL}) where {FT,DIM_AZI,DIM_GSV,DIM_INCL,DIM_NIR,DIM_PAR,DIM_SIF,DIM_SIFE,DIM_WL} = DIM_PAR;
+dim_sif(::EmeraldConfiguration{FT,DIM_AZI,DIM_GSV,DIM_INCL,DIM_NIR,DIM_PAR,DIM_SIF,DIM_SIFE,DIM_WL}) where {FT,DIM_AZI,DIM_GSV,DIM_INCL,DIM_NIR,DIM_PAR,DIM_SIF,DIM_SIFE,DIM_WL} = DIM_SIF;
+dim_sife(::EmeraldConfiguration{FT,DIM_AZI,DIM_GSV,DIM_INCL,DIM_NIR,DIM_PAR,DIM_SIF,DIM_SIFE,DIM_WL}) where {FT,DIM_AZI,DIM_GSV,DIM_INCL,DIM_NIR,DIM_PAR,DIM_SIF,DIM_SIFE,DIM_WL} = DIM_SIFE;
+dim_wl(::EmeraldConfiguration{FT,DIM_AZI,DIM_GSV,DIM_INCL,DIM_NIR,DIM_PAR,DIM_SIF,DIM_SIFE,DIM_WL}) where {FT,DIM_AZI,DIM_GSV,DIM_INCL,DIM_NIR,DIM_PAR,DIM_SIF,DIM_SIFE,DIM_WL} = DIM_WL;

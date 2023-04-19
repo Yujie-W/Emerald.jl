@@ -33,4 +33,5 @@ CanopyStructure{FT}(; hotspot::Number = 0.05, DIM_AZI::Int = 360, DIM_INCL::Int 
     return CanopyStructure{FT,DIM_AZI,DIM_INCL}(hotspot, _azis, (_azi_min,_azi_max), _incs, (_inc_min,_inc_max))
 );
 
-dims(::CanopyStructure{FT,DIM_AZI,DIM_INCL}) where {FT,DIM_AZI,DIM_INCL} = (DIM_AZI,DIM_INCL,);
+dim_azi(::CanopyStructure{FT,DIM_AZI,DIM_INCL}) where {FT,DIM_AZI,DIM_INCL} = DIM_AZI;
+dim_incl(::CanopyStructure{FT,DIM_AZI,DIM_INCL}) where {FT,DIM_AZI,DIM_INCL} = DIM_INCL;

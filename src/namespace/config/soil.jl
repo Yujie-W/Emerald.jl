@@ -21,4 +21,5 @@ GSVSoilAlbedo{FT}(dset::String = LAND_2021; DIM_GSV::Int = 4) where {FT} = (
     return GSVSoilAlbedo{FT,DIM_GSV,DIM_WL,DIM_GSV*DIM_WL}(_mat_ρ)
 );
 
-dims(::GSVSoilAlbedo{FT,DIM_GSV,DIM_WL}) where {FT,DIM_GSV,DIM_WL} = (DIM_GSV,DIM_WL,);
+dim_gsv(::GSVSoilAlbedo{FT,DIM_GSV,DIM_WL}) where {FT,DIM_GSV,DIM_WL} = DIM_GSV;
+dim_wl(::GSVSoilAlbedo{FT,DIM_GSV,DIM_WL}) where {FT,DIM_GSV,DIM_WL} = DIM_WL;

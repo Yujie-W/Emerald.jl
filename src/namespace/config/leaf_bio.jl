@@ -52,4 +52,4 @@ HyperspectralAbsorption{FT}(dset::String = LAND_2021) where {FT} = (
     )
 );
 
-dims(::HyperspectralAbsorption{FT,DIM_WL}) where {FT,DIM_WL} = (DIM_WL,);
+dim_wl(::HyperspectralAbsorption{FT,DIM_WL}) where {FT,DIM_WL} = DIM_WL;
