@@ -2,10 +2,13 @@ module CanopyRT
 
 using SpecialFunctions: expint
 
-using ..NameSpace: EmeraldConfiguration, HyperspectralAbsorption, MultipleLayerSPACState, WaveLengthSet
+using ..NameSpace: CanopyCache, EmeraldConfiguration, HyperspectralAbsorption, MultipleLayerSPACState, WaveLengthSet
 
 
-include("leaf/optics.jl")
+include("geometry/extinction.jl")
+include("geometry/optics.jl")
+include("geometry/shortwave.jl")
+include("geometry/update.jl")
 
 
 end # module

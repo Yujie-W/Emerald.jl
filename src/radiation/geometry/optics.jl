@@ -53,7 +53,7 @@ end
 
     leaf_optical_properties(config::EmeraldConfiguration{FT}, state::MultipleLayerSPACState{FT}, i::Int, j::Int) where {FT}
 
-Return leaf shortwave reflectance and transmittance at a given wavelength, given
+Return leaf shortwave reflectance, transmittance and PPAR/APAR at a given wavelength, given
 - `config` `EmeraldConfiguration` struct
 - `state` All state variables in a multiple layer SPAC
 - `i` ith canopy layer
@@ -76,6 +76,7 @@ leaf_optical_properties(lha::HyperspectralAbsorption{FT}, ant::FT, brown::FT, ca
     _a_non = (K_ANT[j] * ant + K_BROWN[j] * brown + K_H₂O[j] * water + K_CBC[j] * cbc + K_PRO[j] * pro + K_LMA[j] * (lma - cbc - pro));
     _a_all = _a_lhc + _a_non;
     _k_all = _a_all / mesophyll;
+    _k_lhc = _a_lhc / _a_all;
 
     # calculate the reflectance and transmittance at the interfaces of one layer
     _τ   = max(0, (1 - _k_all) * exp(-_k_all) + _k_all ^ 2 * expint(_k_all + eps(FT)));
@@ -117,5 +118,5 @@ leaf_optical_properties(lha::HyperspectralAbsorption{FT}, ant::FT, brown::FT, ca
     _τ_sw  = _τ_top * _τ_sub / _denom;
     _ρ_sw  = _ρ_top + _τ_top * _ρ_sub * _τ_btm / _denom;
 
-    return _ρ_sw, _τ_sw
+    return _ρ_sw, _τ_sw, _k_lhc
 );

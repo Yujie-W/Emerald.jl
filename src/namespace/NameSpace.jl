@@ -3,7 +3,7 @@ module NameSpace
 using LazyArtifacts
 
 using DocStringExtensions: TYPEDEF, TYPEDFIELDS
-using StaticArrays: SVector
+using StaticArrays: SMatrix, SVector
 
 using ..EmeraldIO.Netcdf: read_nc, size_nc
 
@@ -28,6 +28,8 @@ include("config/soil.jl")
 include("config/wavelength.jl")
 
 include("config/all.jl")
+
+include("cache/canopy.jl")
 
 include("state/spac.jl")
 
