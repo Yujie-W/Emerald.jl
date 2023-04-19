@@ -21,9 +21,11 @@ include("config/wavelength.jl")
 
 include("config/all.jl")
 
-include("cache/canopy.jl")
+include("model/clumping.jl")
 
 include("state/spac.jl")
+
+include("cache/canopy.jl")
 
 
 end # module

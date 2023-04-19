@@ -31,6 +31,14 @@ Base.@kwdef struct MultipleLayerSPACState{FT,DIM_CANOPY}
     pro::NTuple{DIM_CANOPY,FT} = NTuple{DIM_CANOPY,FT}(zeros(FT,DIM_CANOPY))
     "Leaf water content `[kg m⁻²]`"
     water::NTuple{DIM_CANOPY,FT} = NTuple{DIM_CANOPY,FT}(ones(FT,DIM_CANOPY) .* FT(0.06))
+
+    # Canopy structure used for canopy radiative transfer
+    "Clumping index model"
+    ci::ClumpingIndexPinty{FT} = ClumpingIndexPinty{FT}()
+    "Leaf area index"
+    lai::FT = 3
+    "Leaf area index distribution"
+    δlai::NTuple{DIM_CANOPY,FT} = NTuple{DIM_CANOPY,FT}(ones(FT,DIM_CANOPY) .* lai ./ DIM_CANOPY)
 end
 
 dim_canopy(::MultipleLayerSPACState{FT,DIM_CANOPY}) where {FT,DIM_CANOPY} = DIM_CANOPY;
