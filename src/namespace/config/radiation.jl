@@ -9,17 +9,19 @@ Structure that stores hyperspectral radiation information
 $(TYPEDFIELDS)
 
 """
-Base.@kwdef struct HyperspectralRadiation{FT,DIM_WL}
+Base.@kwdef struct HyperspectralRadiation{FT,VT_WL}
     "Diffuse radiation `[mW m⁻² nm⁻¹]`"
-    E_DIF::SVector{DIM_WL,FT}
+    E_DIF::VT_WL
     "Direct radiation `[mW m⁻² nm⁻¹]`"
-    E_DIR::SVector{DIM_WL,FT}
+    E_DIR::VT_WL
 end
 
 HyperspectralRadiation{FT}(dset::String = LAND_2021) where {FT} = (
-    _dim_λ = size_nc(dset, "E_DIFF")[2][1];
+    DIM_WL = size_nc(dset, "E_DIFF")[2][1];
 
-    HyperspectralRadiation{FT,_dim_λ}(read_nc(dset, "E_DIFF"), read_nc(dset, "E_DIR"))
+    VT_WL = USE_STATIC_ARRAY ? SVector{DIM_WL,FT} : Vector{FT};
+
+    HyperspectralRadiation{FT,VT_WL}(read_nc(dset, "E_DIFF"), read_nc(dset, "E_DIR"))
 );
 
-dim(::HyperspectralRadiation{FT,DIM_WL}) where {FT,DIM_WL} = DIM_WL;
+dim(var::HyperspectralRadiation) = length(var.E_DIF);

@@ -12,6 +12,10 @@ const LAND_2017 = artifact"land_model_spectrum_V3" * "/clima_land_spectra_2017.n
 const LAND_2021 = artifact"land_model_spectrum_V3" * "/clima_land_spectra_2021.nc";
 
 
+USE_STATIC_ARRAY = true;
+use_static_arrays!(yesno::Bool = true) = (global USE_STATIC_ARRAY; USE_STATIC_ARRAY = yesno; return nothing);
+
+
 include("config/canopy.jl")
 include("config/constant.jl")
 include("config/leaf_bio.jl")
