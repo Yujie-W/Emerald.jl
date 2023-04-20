@@ -119,7 +119,13 @@ shortwave_coefs(leaf_optics::NTuple{3,FT}, δlai::FT, ks::FT, bf::FT, ci::FT) wh
 );
 
 
-function effective_shortwave_coefs(sca_coefs::SVector{DIM_CANOPY,NTuple{5,FT}}, ρ_soil_sw::FT) where {FT,DIM_CANOPY}
+function effective_shortwave_coefs end
+
+effective_shortwave_coefs(sca_coefs::SVector{DIM_WL,SVector{DIM_CANOPY,NTuple{5,FT}}}, ρ_soil_sw::SVector{DIM_WL,FT}) where {FT,DIM_CANOPY,DIM_WL} = (
+    return effective_shortwave_coefs.(sca_coefs, ρ_soil_sw);
+)
+
+effective_shortwave_coefs(sca_coefs::SVector{DIM_CANOPY,NTuple{5,FT}}, ρ_soil_sw::FT) where {FT,DIM_CANOPY} = (
     _t_dd = zeros(FT, DIM_CANOPY);
     _t_sd = zeros(FT, DIM_CANOPY);
     _r_dd = zeros(FT, DIM_CANOPY+1);
@@ -143,8 +149,8 @@ function effective_shortwave_coefs(sca_coefs::SVector{DIM_CANOPY,NTuple{5,FT}}, 
         _r_sd[_i] = _ρ_sd_i + _τ_ss_i * _r_sd_j * _τ_dd_i + _t_sd[_i] * _r_dd_j * _τ_dd_i;  # ir + it-jr-it(v) + it-jr_dd-it
     end;
 
-    return _r_dd, _r_sd, _t_dd, _t_sd
-end
+    return SVector{DIM_CANOPY+1,FT}(_r_dd), SVector{DIM_CANOPY+1,FT}(_r_sd), SVector{DIM_CANOPY,FT}(_t_dd), SVector{DIM_CANOPY,FT}(_t_sd)
+);
 
 
 
