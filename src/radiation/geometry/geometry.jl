@@ -120,7 +120,7 @@ function effective_sun_scatter_coefs(sca_coefs::SVector{DIM_CANOPY,NTuple{5,FT}}
         _r_sd[_i] = _ρ_sd_i + _τ_ss_i * _r_sd_j * _τ_dd_i + _t_sd[_i] * _r_dd_j * _τ_dd_i;  # ir + it-jr-it(v) + it-jr_dd-it
     end;
 
-    return nothing
+    return _r_dd, _r_sd, _t_dd, _t_sd
 end
 
 
