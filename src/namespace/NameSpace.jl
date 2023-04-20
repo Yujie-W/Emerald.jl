@@ -22,6 +22,7 @@ include("config/wavelength.jl")
 include("config/all.jl")
 
 include("model/clumping.jl")
+include("model/soil_vc.jl")
 
 include("state/spac.jl")
 

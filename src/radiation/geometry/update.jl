@@ -1,6 +1,7 @@
 
-function canopy_radiation_cache(config::EmeraldConfiguration{FT}, state::MultipleLayerSPACState{FT,DIM_CANOPY}, sza::FT, p_incl::SVector{DIM_INCL,FT}) where {FT,DIM_CANOPY,DIM_INCL}
+function canopy_radiation_cache(config::EmeraldConfiguration{FT}, state::MultipleLayerSPACState{FT}, sza::FT, p_incl::SVector{DIM_INCL,FT}) where {FT,DIM_INCL}
     DIM_AZI = dim_azi(config);
+    DIM_CANOPY = dim_canopy(state);
     DIM_WL = dim_wl(config);
 
     # compute leaf optical properties and save it to cache variables

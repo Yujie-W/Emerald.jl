@@ -1,6 +1,7 @@
 
-function sun_geometry(config::EmeraldConfiguration{FT}, state::MultipleLayerSPACState{FT,DIM_CANOPY}, sza::FT, p_incl::SVector{DIM_INCL,FT}) where {FT,DIM_CANOPY,DIM_INCL}
+function sun_geometry(config::EmeraldConfiguration{FT}, state::MultipleLayerSPACState{FT}, sza::FT, p_incl::SVector{DIM_INCL,FT}) where {FT,DIM_INCL}
     DIM_AZI = dim_azi(config);
+    DIM_CANOPY = dim_canopy(state);
 
     # compute the clumping index
     _ci = clumping_index(state.ci, sza);
@@ -33,7 +34,7 @@ function sun_geometry(config::EmeraldConfiguration{FT}, state::MultipleLayerSPAC
 end
 
 
-function longwave_coefs(config::EmeraldConfiguration{FT}, state::MultipleLayerSPACState{FT,DIM_CANOPY}, ext_coefs::NTuple{3,FT}) where {FT,DIM_CANOPY}
+function longwave_coefs(config::EmeraldConfiguration{FT}, state::MultipleLayerSPACState{FT}, ext_coefs::NTuple{3,FT}) where {FT}
     (_,_bf,_ci) = ext_coefs;
 
     # long wave reflectance and transmittance based on leaf area

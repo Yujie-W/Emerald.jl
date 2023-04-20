@@ -13,6 +13,8 @@ Base.@kwdef struct EmeraldConfiguration{FT,DIM_AZI,DIM_GSV,DIM_INCL,DIM_NIR,DIM_
     # On/off features
     "Whether APAR absorbed by carotenoid is counted as PPAR"
     APAR_CAR::Bool = true
+    "Whether to use hyperspectral soil albedo"
+    HYPER_SOIL::Bool = false
     "Whether to use steady state plant hydraulic system"
     STEADY_STATE_HS::Bool = true
     "Whether to convert energy to photons when computing fluorescence"
