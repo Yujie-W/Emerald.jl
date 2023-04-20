@@ -2,10 +2,10 @@ module CanopyRT
 
 using QuadGK: quadgk
 using SpecialFunctions: expint
-using StaticArrays: SVector
+using StaticArrays: SMatrix, SVector
 
-using ..NameSpace: CanopyCache, ClumpingIndexPinty, EmeraldConfiguration, HyperspectralAbsorption, MultipleLayerSPACState, WaveLengthSet
-using ..NameSpace: dim_azi, dim_canopy
+using ..NameSpace: CanopyRadiationCache, ClumpingIndexPinty, EmeraldConfiguration, HyperspectralAbsorption, MultipleLayerSPACState, WaveLengthSet
+using ..NameSpace: dim_azi, dim_canopy, dim_incl, dim_wl
 
 
 include("geometry/clumping.jl")
