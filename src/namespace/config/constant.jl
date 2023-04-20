@@ -56,6 +56,12 @@ Base.@kwdef struct UniversalConstants{FT}
     Λ_THERMAL_H₂O::FT = 0.57
     "Density of liquid water `[kg m⁻³]`"
     ρ_H₂O::FT = 1000
+    "Broadband leaf thermal reflectance, related to blackbody emittance `[-]`"
+    ρ_LEAF_LW::FT = 0.01
+    "Broadband soil thermal reflectance, related to blackbody emittance `[-]`"
+    ρ_SOIL_LW::FT = 0.06
+    "Broadband leaf thermal transmission, related to blackbody emittance `[-]`"
+    τ_LEAF_LW::FT = 0.01
 end
 
 
@@ -184,6 +190,18 @@ YEAR_D(uc::UniversalConstants) = uc.YEAR_D;
 """ Density of liquid water `[kg m⁻³]` """
 ρ_H₂O(FT=Float64) = FT(UNIVERSAL_CONSTANTS.ρ_H₂O);
 ρ_H₂O(uc::UniversalConstants) = uc.ρ_H₂O;
+
+""" Broadband leaf thermal reflectance, related to blackbody emittance `[-]` """
+ρ_LEAF_LW(FT=Float64) = FT(UNIVERSAL_CONSTANTS.ρ_LEAF_LW);
+ρ_LEAF_LW(uc::UniversalConstants) = uc.ρ_LEAF_LW;
+
+""" Broadband soil thermal reflectance, related to blackbody emittance `[-]` """
+ρ_SOIL_LW(FT=Float64) = FT(UNIVERSAL_CONSTANTS.ρ_SOIL_LW);
+ρ_SOIL_LW(uc::UniversalConstants) = uc.ρ_SOIL_LW;
+
+""" Broadband leaf thermal transmission, related to blackbody emittance `[-]` """
+τ_LEAF_LW(FT=Float64) = FT(UNIVERSAL_CONSTANTS.τ_LEAF_LW);
+τ_LEAF_LW(uc::UniversalConstants) = uc.τ_LEAF_LW;
 
 """ Density of water times gravity `[MPa m⁻¹]` """
 ρg_MPa(FT=Float64) = ρ_H₂O(FT) * GRAVITY(FT) * FT(1e-6);

@@ -12,25 +12,25 @@ $(TYPEDFIELDS)
 Base.@kwdef struct MultipleLayerSPACState{FT,DIM_CANOPY}
     # Leaf biophysics used for canopy radiative transfer
     "Anthocyanin content `[kg m⁻²]`"
-    ant::NTuple{DIM_CANOPY,FT} = NTuple{DIM_CANOPY,FT}(zeros(FT,DIM_CANOPY))
+    ant::SVector{DIM_CANOPY,FT} = zeros(FT,DIM_CANOPY)
     "Senescent material (brown pigments) fraction `[kg m⁻²]`"
-    brown::NTuple{DIM_CANOPY,FT} = NTuple{DIM_CANOPY,FT}(zeros(FT,DIM_CANOPY))
+    brown::SVector{DIM_CANOPY,FT} = zeros(FT,DIM_CANOPY)
     "Leaf carotenoid contents `[kg m⁻²]`"
-    car::NTuple{DIM_CANOPY,FT} = NTuple{DIM_CANOPY,FT}(ones(FT,DIM_CANOPY) .* 40 ./ 7)
+    car::SVector{DIM_CANOPY,FT} = ones(FT,DIM_CANOPY) .* 40 ./ 7
     "Carbon-based constituents in lma `[kg m⁻²]`"
-    cbc::NTuple{DIM_CANOPY,FT} = NTuple{DIM_CANOPY,FT}(zeros(FT,DIM_CANOPY))
+    cbc::SVector{DIM_CANOPY,FT} = zeros(FT,DIM_CANOPY)
     "Leaf chlorophyll contents `[kg m⁻²]`"
-    chl::NTuple{DIM_CANOPY,FT} = NTuple{DIM_CANOPY,FT}(ones(FT,DIM_CANOPY) .* 40)
+    chl::SVector{DIM_CANOPY,FT} = ones(FT,DIM_CANOPY) .* 40
     "Zeaxanthin fraction in Carotenoid (1=all Zeaxanthin, 0=all Violaxanthin) `[-]`"
-    f_zeax::NTuple{DIM_CANOPY,FT} = NTuple{DIM_CANOPY,FT}(zeros(FT,DIM_CANOPY))
+    f_zeax::SVector{DIM_CANOPY,FT} = zeros(FT,DIM_CANOPY)
     "Dry matter content (dry leaf mass per unit area) `[kg m⁻²]`"
-    lma::NTuple{DIM_CANOPY,FT} = NTuple{DIM_CANOPY,FT}(ones(FT,DIM_CANOPY) .* FT(0.012))
+    lma::SVector{DIM_CANOPY,FT} = ones(FT,DIM_CANOPY) .* FT(0.012)
     "Leaf mesophyll structural parameter that describes mesophyll reflectance and transmittance"
-    mesophyll::NTuple{DIM_CANOPY,FT} = NTuple{DIM_CANOPY,FT}(ones(FT,DIM_CANOPY) .* FT(1.4))
+    mesophyll::SVector{DIM_CANOPY,FT} = ones(FT,DIM_CANOPY) .* FT(1.4)
     "Protein content in lma (pro = lma - cbc) `[kg m⁻²]`"
-    pro::NTuple{DIM_CANOPY,FT} = NTuple{DIM_CANOPY,FT}(zeros(FT,DIM_CANOPY))
+    pro::SVector{DIM_CANOPY,FT} = zeros(FT,DIM_CANOPY)
     "Leaf water content `[kg m⁻²]`"
-    water::NTuple{DIM_CANOPY,FT} = NTuple{DIM_CANOPY,FT}(ones(FT,DIM_CANOPY) .* FT(0.06))
+    water::SVector{DIM_CANOPY,FT} = ones(FT,DIM_CANOPY) .* FT(0.06)
 
     # Canopy structure used for canopy radiative transfer
     "Clumping index model"
@@ -38,7 +38,7 @@ Base.@kwdef struct MultipleLayerSPACState{FT,DIM_CANOPY}
     "Leaf area index"
     lai::FT = 3
     "Leaf area index distribution"
-    δlai::NTuple{DIM_CANOPY,FT} = NTuple{DIM_CANOPY,FT}(ones(FT,DIM_CANOPY) .* lai ./ DIM_CANOPY)
+    δlai::SVector{DIM_CANOPY,FT} = ones(FT,DIM_CANOPY) .* lai ./ DIM_CANOPY
 end
 
 dim_canopy(::MultipleLayerSPACState{FT,DIM_CANOPY}) where {FT,DIM_CANOPY} = DIM_CANOPY;
