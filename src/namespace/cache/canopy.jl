@@ -21,8 +21,8 @@ Base.@kwdef struct CanopyRadiationCache{FT,DIM_AZI,DIM_CANOPY,DIM_CANOPY_1,DIM_I
     extinction_coefs::NTuple{3,FT}
     "Fraction of sunlit leaves"
     f_sunlit::SVector{DIM_CANOPY,FT}
-    # "Canopy radiation scattering coefficients"
-    # scatter_coefs::SMatrix{DIM_CANOPY,DIM_WL,NTuple{5,FT},SIZE_CANOPY_WL}
+    "Canopy radiation scattering coefficients"
+    scatter_coefs::SVector{DIM_WL,SVector{DIM_CANOPY,NTuple{5,FT}}}
     "Effective longwave radiation reflectance based on level LAI"
     ρ_lw::SVector{DIM_CANOPY,FT}
     "Effective longwave radiation transmittance based on level LAI"

@@ -71,13 +71,36 @@ function effective_longwave_coefs(config::EmeraldConfiguration{FT}, ρ_lw::SVect
 end
 
 
-function sun_scatter_coefs(δlai::FT, leaf_optics::NTuple{3,FT}, ext_coefs::NTuple{3,FT}) where {FT}
-    (_ks,_bf,_ci) = ext_coefs;
-    _ilai = δlai * _ci;
-    _sdb = (_ks + _bf) / 2;
-    _sdf = (_ks - _bf) / 2;
-    _ddb = (1 + _bf) / 2;
-    _ddf = (1 - _bf) / 2;
+"""
+
+    shortwave_scatter_coefs(leaf_optics::SVector{DIM_WL,SVector{DIM_CANOPY,NTuple{3,FT}}}, δlai::SVector{DIM_CANOPY,FT}, ext_coefs::NTuple{3,FT}) where {FT,DIM_CANOPY,DIM_WL}
+
+Return a DIM_WL-element vector of DIM_CANOPY-element vector of shortwave scattering coefficients, given
+- `leaf_optics` Leaf optical properties
+- `δlai` Leaf area index per canopy layer
+- `ext_coefs` Canopy extinction coefficients
+
+"""
+function shortwave_coefs end
+
+shortwave_coefs(leaf_optics::SVector{DIM_WL,SVector{DIM_CANOPY,NTuple{3,FT}}}, δlai::SVector{DIM_CANOPY,FT}, ext_coefs::NTuple{3,FT}) where {FT,DIM_CANOPY,DIM_WL} = (
+    return shortwave_coefs.(leaf_optics, (δlai,), ext_coefs...)
+);
+
+# This method return a vector of tuple of scattering coefficients for shortwave radiation.
+# This method is supposed to parallelize the calculations, and thus is not meant for public use.
+shortwave_coefs(leaf_optics::SVector{DIM_CANOPY,NTuple{3,FT}}, δlai::SVector{DIM_CANOPY,FT}, ks::FT, bf::FT, ci::FT) where {FT,DIM_CANOPY} = (
+    return shortwave_coefs.(leaf_optics, δlai, ks, bf, ci);
+);
+
+# This method return a tuple of scattering coefficients for shortwave radiation.
+# This method is supposed to parallelize the calculations, and thus is not meant for public use.
+shortwave_coefs(leaf_optics::NTuple{3,FT}, δlai::FT, ks::FT, bf::FT, ci::FT) where {FT} = (
+    _ilai = δlai * ci;
+    _sdb = (ks + bf) / 2;
+    _sdf = (ks - bf) / 2;
+    _ddb = (1 + bf) / 2;
+    _ddf = (1 - bf) / 2;
 
     # compute the scattering coefficients for ith canopy layer and jth wavelength
     _σ_ddb = _ddb * leaf_optics[1] + _ddf * leaf_optics[2];
@@ -86,17 +109,17 @@ function sun_scatter_coefs(δlai::FT, leaf_optics::NTuple{3,FT}, ext_coefs::NTup
     _σ_sdf = _sdf * leaf_optics[1] + _sdb * leaf_optics[2];
 
     # update the transmittance and reflectance for single directions per layer
-    _τ_ss = exp(-1 * _ks * _ilai);
+    _τ_ss = exp(-1 * ks * _ilai);
     _τ_dd = exp(-1 * (1 - _σ_ddf) * _ilai);
     _τ_sd = 1 - exp(-1 * _σ_sdf * _ilai);
     _ρ_dd = 1 - exp(-1 * _σ_ddb * _ilai);
     _ρ_sd = 1 - exp(-1 * _σ_sdb * _ilai);
 
     return _τ_ss, _τ_dd, _τ_sd, _ρ_dd, _ρ_sd
-end
+);
 
 
-function effective_sun_scatter_coefs(sca_coefs::SVector{DIM_CANOPY,NTuple{5,FT}}, ρ_soil_sw::FT) where {FT,DIM_CANOPY}
+function effective_shortwave_coefs(sca_coefs::SVector{DIM_CANOPY,NTuple{5,FT}}, ρ_soil_sw::FT) where {FT,DIM_CANOPY}
     _t_dd = zeros(FT, DIM_CANOPY);
     _t_sd = zeros(FT, DIM_CANOPY);
     _r_dd = zeros(FT, DIM_CANOPY+1);

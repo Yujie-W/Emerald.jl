@@ -8,7 +8,7 @@ function canopy_radiation_cache(config::EmeraldConfiguration{FT}, state::Multipl
     (_coefs, _abs_fs, _f_sunlit) = sun_geometry(config, state, sza, p_incl);
     (_ρ_lw, _τ_lw) = longwave_coefs(config, state, _coefs);
     (_r_lw, _t_lw) = effective_longwave_coefs(config, _ρ_lw, _τ_lw);
-    # _sun_scatter = sun_scatter_coefs.(state.δlai, _leaf_optics, (_coefs,));
+    _scatter_sw = shortwave_coefs(_leaf_optics, state.δlai, _coefs);
 
 
 
@@ -24,7 +24,7 @@ function canopy_radiation_cache(config::EmeraldConfiguration{FT}, state::Multipl
                 abs_fs           = _abs_fs,
                 extinction_coefs = _coefs,
                 f_sunlit         = _f_sunlit,
-                #scatter_coefs    = _sun_scatter,
+                scatter_coefs    = _scatter_sw,
                 ρ_lw             = _ρ_lw,
                 τ_lw             = _τ_lw,
                 r_lw             = _r_lw,
