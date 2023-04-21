@@ -28,7 +28,7 @@ Base.@kwdef struct BrooksCorey{FT} <:AbstractSoilVC{FT}
     "Soil b"
     B::FT
     "Soil type"
-    TYPE::String
+    TYPE::Int
     "Potential at saturation `[MPa]`"
     Ψ_SAT::FT
     "Saturated soil volumetric water content"
@@ -55,8 +55,8 @@ Base.@kwdef struct VanGenuchten{FT} <:AbstractSoilVC{FT}
     K_MAX::FT
     "Soil n is Measure of the pore-size distribution"
     N::FT
-    "Soil type"
-    TYPE::String
+    # "Soil type"
+    # TYPE::String
     "Soil α is related to the inverse of the air entry suction, α > 0"
     α::FT
     "Residual soil volumetric water content"
@@ -105,5 +105,6 @@ VanGenuchten{FT}(name::String) where {FT} = (
     end;
 
     # return a new struct
-    return VanGenuchten{FT}(K_MAX = _p[5] * ρ_H₂O() / M_H₂O() / ρg_MPa(), N = _p[2], TYPE = name, α = _p[1], Θ_RES = _p[4], Θ_SAT = _p[3])
+    # return VanGenuchten{FT}(K_MAX = _p[5] * ρ_H₂O() / M_H₂O() / ρg_MPa(), N = _p[2], TYPE = name, α = _p[1], Θ_RES = _p[4], Θ_SAT = _p[3])
+    return VanGenuchten{FT}(K_MAX = _p[5] * ρ_H₂O() / M_H₂O() / ρg_MPa(), N = _p[2], α = _p[1], Θ_RES = _p[4], Θ_SAT = _p[3])
 );

@@ -1,5 +1,5 @@
 
-function sun_geometry(config::EmeraldConfiguration{FT}, state::MultipleLayerSPACState{FT}, sza::FT, p_incl::SVector{DIM_INCL,FT}) where {FT,DIM_INCL}
+function sun_geometry(config::EmeraldConfiguration{FT}, state::MultipleLayerSPACState{FT}, sza::FT, p_incl::VT_INCL) where {FT,VT_INCL<:Union{SVector,Vector}}
     DIM_AZI = dim_azi(config);
     DIM_CANOPY = dim_canopy(state);
 
@@ -49,7 +49,7 @@ function longwave_coefs(config::EmeraldConfiguration{FT}, state::MultipleLayerSP
 end
 
 
-function effective_longwave_coefs(config::EmeraldConfiguration{FT}, ρ_lw::VT_CANOPY, τ_lw::VT_CANOPY) where {FT,VT_CANOPY}
+function effective_longwave_coefs(config::EmeraldConfiguration{FT}, ρ_lw::VT_CANOPY, τ_lw::VT_CANOPY) where {FT,VT_CANOPY<:Union{SVector,Vector}}
     DIM_CANOPY = length(ρ_lw);
 
     _r_lw = zeros(FT, DIM_CANOPY+1);
@@ -70,7 +70,11 @@ function effective_longwave_coefs(config::EmeraldConfiguration{FT}, ρ_lw::VT_CA
         _r_lw[_i] = _ρ_lw_i + _τ_lw_i * _r_lw_j * _t_lw[_i];    # ir + it-jr-it
     end;
 
-    return _r_lw, _t_lw
+    if USE_STATIC_ARRAY
+        return SVector{DIM_CANOPY+1,FT}(_r_lw), SVector{DIM_CANOPY,FT}(_t_lw)
+    else
+        return _r_lw, _t_lw
+    end
 end
 
 
@@ -86,13 +90,13 @@ Return a DIM_WL-element vector of DIM_CANOPY-element vector of shortwave scatter
 """
 function shortwave_coefs end
 
-shortwave_coefs(leaf_optics::VT_WL_VT_CANOPY_T3, δlai::VT_CANOPY, ext_coefs::NTuple{3,FT}) where {FT,VT_CANOPY,VT_WL_VT_CANOPY_T3} = (
+shortwave_coefs(leaf_optics::VT_WL_VT_CANOPY_T3, δlai::VT_CANOPY, ext_coefs::NTuple{3,FT}) where {FT,VT_CANOPY<:Union{SVector,Vector},VT_WL_VT_CANOPY_T3<:Union{SVector,Vector}} = (
     return shortwave_coefs.(leaf_optics, (δlai,), ext_coefs...)
 );
 
 # This method return a vector of tuple of scattering coefficients for shortwave radiation.
 # This method is supposed to parallelize the calculations, and thus is not meant for public use.
-shortwave_coefs(leaf_optics::VT_CANOPY_T3, δlai::VT_CANOPY, ks::FT, bf::FT, ci::FT) where {FT,VT_CANOPY,VT_CANOPY_T3} = (
+shortwave_coefs(leaf_optics::VT_CANOPY_T3, δlai::VT_CANOPY, ks::FT, bf::FT, ci::FT) where {FT,VT_CANOPY<:Union{SVector,Vector},VT_CANOPY_T3<:Union{SVector,Vector}} = (
     return shortwave_coefs.(leaf_optics, δlai, ks, bf, ci);
 );
 
@@ -124,12 +128,12 @@ shortwave_coefs(leaf_optics::NTuple{3,FT}, δlai::FT, ks::FT, bf::FT, ci::FT) wh
 
 function effective_shortwave_coefs end
 
-effective_shortwave_coefs(sca_coefs::VT_WL_VT_CANOPY_T5, ρ_soil_sw::VT_WL) where {VT_WL<:Union{SVector,Vector},VT_WL_VT_CANOPY_T5} = (
+effective_shortwave_coefs(sca_coefs::VT_WL_VT_CANOPY_T5, ρ_soil_sw::VT_WL) where {VT_WL<:Union{SVector,Vector},VT_WL_VT_CANOPY_T5<:Union{SVector,Vector}} = (
     return effective_shortwave_coefs.(sca_coefs, ρ_soil_sw);
 )
 
-effective_shortwave_coefs(sca_coefs::VT_CANOPY_T5, ρ_soil_sw::FT) where {FT,VT_CANOPY_T5} = (
-    DIM_CANOPY = length(sca_coefs[1]);
+effective_shortwave_coefs(sca_coefs::VT_CANOPY_T5, ρ_soil_sw::FT) where {FT,VT_CANOPY_T5<:Union{SVector,Vector}} = (
+    DIM_CANOPY = length(sca_coefs);
 
     _t_dd = zeros(FT, DIM_CANOPY);
     _t_sd = zeros(FT, DIM_CANOPY);
