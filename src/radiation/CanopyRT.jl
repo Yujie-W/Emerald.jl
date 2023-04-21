@@ -4,6 +4,7 @@ using QuadGK: quadgk
 using SpecialFunctions: expint
 using StaticArrays: SMatrix, SVector
 
+using ..NameSpace: USE_STATIC_ARRAY
 using ..NameSpace: CanopyRadiationCache, ClumpingIndexPinty, EmeraldConfiguration, HyperspectralAbsorption, MultipleLayerSPACState, WaveLengthSet
 using ..NameSpace: ρ_LEAF_LW, ρ_SOIL_LW, τ_LEAF_LW
 using ..NameSpace: dim_azi, dim_canopy, dim_incl, dim_wl

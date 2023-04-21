@@ -15,12 +15,29 @@ function canopy_radiation_cache(config::EmeraldConfiguration{FT}, state::Multipl
 
 
     # compute soil sw albedo
-    _eff_coef_sw = effective_shortwave_coefs(_coef_sw, SVector{DIM_WL,FT}(ones(FT,DIM_WL) .* FT(0.1)));
+    _soil_albedo = USE_STATIC_ARRAY ? SVector{DIM_WL,FT}(ones(FT,DIM_WL) .* FT(0.1)) : ones(FT,DIM_WL) .* FT(0.1);
+    _eff_coef_sw = effective_shortwave_coefs(_coef_sw, _soil_albedo);
 
 
 
 
-    return CanopyRadiationCache{FT,DIM_AZI,DIM_CANOPY,DIM_CANOPY+1,DIM_INCL,DIM_WL,DIM_AZI*DIM_INCL}(
+    if USE_STATIC_ARRAY
+        VT_CANOPY          = SVector{DIM_CANOPY,FT};
+        VT_CANOPY_1        = SVector{DIM_CANOPY+1,FT};
+        VT_WL_TVVVV        = SVector{DIM_WL,Tuple{VT_CANOPY_1,VT_CANOPY_1,VT_CANOPY,VT_CANOPY}};
+        VT_WL_VT_CANOPY_T3 = SVector{DIM_WL,SVector{DIM_CANOPY,NTuple{3,FT}}};
+        VT_WL_VT_CANOPY_T5 = SVector{DIM_WL,SVector{DIM_CANOPY,NTuple{5,FT}}};
+        MT_AZI_INCL        = SMatrix{DIM_INCL,DIM_AZI,FT,DIM_AZI*DIM_INCL};
+    else
+        VT_CANOPY          = Vector{FT};
+        VT_CANOPY_1        = Vector{FT};
+        VT_WL_TVVVV        = Vector{Tuple{VT_CANOPY_1,VT_CANOPY_1,VT_CANOPY,VT_CANOPY}};
+        VT_WL_VT_CANOPY_T3 = Vector{Vector{NTuple{3,FT}}};
+        VT_WL_VT_CANOPY_T5 = Vector{Vector{NTuple{5,FT}}};
+        MT_AZI_INCL        = Matrix{FT};
+    end;
+
+    return CanopyRadiationCache{FT,VT_CANOPY,VT_CANOPY_1,VT_WL_TVVVV,VT_WL_VT_CANOPY_T3,VT_WL_VT_CANOPY_T5,MT_AZI_INCL}(
                 leaf_optics  = _leaf_optics,
                 abs_fs       = _abs_fs,
                 ext_coefs    = _coefs,

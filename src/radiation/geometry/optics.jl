@@ -63,7 +63,7 @@ function leaf_optical_properties end
 leaf_optical_properties(config::EmeraldConfiguration{FT}, state::MultipleLayerSPACState{FT}) where {FT} = (
     _optics = leaf_optical_properties.((config.LHA,), (state,), eachindex(config.LHA.K_CAB));
 
-    return SVector(_optics)
+    return USE_STATIC_ARRAY ? SVector(_optics) : _optics
 );
 
 # This method return a vector of tuples of leaf optics for all canopy layers for one wavelength.
@@ -91,7 +91,7 @@ leaf_optical_properties(lha::HyperspectralAbsorption{FT}, state::MultipleLayerSP
                 state.pro,
                 state.water);
 
-    return SVector(_optics)
+    return USE_STATIC_ARRAY ? SVector(_optics) : _optics
 );
 
 # This method return the shortwave reflectance, transmittance, and PPAR:APAR ratio for given coefficients and pigment contents.
