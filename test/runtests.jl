@@ -1,9 +1,9 @@
-using Emerald
+using EmeraldStudio
 using Test
 
 
-@testset verbose = true "Emerald" begin
-    @testset verbose = true "Emerald NameSpace" begin
+@testset verbose = true "EmeraldStudio" begin
+    @testset verbose = true "EmeraldStudio NameSpace" begin
         include("namespace/config.jl");
         include("namespace/states.jl");
     end;

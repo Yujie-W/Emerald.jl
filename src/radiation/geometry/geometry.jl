@@ -22,15 +22,7 @@ function sun_geometry(config::EmeraldConfiguration{FT}, state::MultipleLayerSPAC
     _Σlai = FT[0; [sum(state.δlai[1:_i]) for _i in 1:DIM_CANOPY]];
     _f_sunlit = [1 / (_ks * _ci * state.δlai[_i]) * (exp(-_ks * _ci * _Σlai[_i]) - exp(-_ks * _ci * _Σlai[_i+1])) for _i in 1:DIM_CANOPY];
 
-    # long wave reflectance and transmittance
-    _ddb = (1 + _bf) / 2;
-    _ddf = (1 - _bf) / 2;
-    _σ_lwb = _ddb * ρ_LEAF_LW(config.CONST) + _ddf * τ_LEAF_LW(config.CONST);
-    _σ_lwf = _ddf * ρ_LEAF_LW(config.CONST) + _ddb * τ_LEAF_LW(config.CONST);
-    _ρ_lw = 1 .- exp.(-1 .* _σ_lwb .* _ci .* state.δlai);
-    _τ_lw = exp.(-1 .* (1 - _σ_lwf) .* _ci .* state.δlai);
-
-    return (_ks,_bf,_ci), _abs_fs, _f_sunlit, _ρ_lw, _τ_lw
+    return (_ks,_bf,_ci), _abs_fs, _f_sunlit
 end
 
 

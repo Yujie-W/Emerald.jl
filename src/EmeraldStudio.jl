@@ -1,4 +1,4 @@
-module Emerald
+module EmeraldStudio
 
 using Revise
 

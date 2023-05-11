@@ -1,4 +1,4 @@
-using Emerald.EmeraldLand.NameSpace
+using EmeraldStudio.EmeraldLand.NameSpace
 
 @testset verbose = true "Configuration Structs" begin
     for FT in [Float32, Float64]
